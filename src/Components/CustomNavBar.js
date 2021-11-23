@@ -12,20 +12,20 @@ const CustomNavBar = ({ selectedNav, setSelectedNav }) => {
       >
         <Nav.Item>
           <Nav.Link eventKey="Users">
-            <i class="bi bi-people-fill pe-1"></i>
+            <i className="bi bi-people-fill pe-1"></i>
             Users
           </Nav.Link>
         </Nav.Item>
         <Nav.Item>
           <Nav.Link eventKey="Settings">
-            <i class="bi bi-gear-fill pe-1"></i>
+            <i className="bi bi-gear-fill pe-1"></i>
             Settings
           </Nav.Link>
         </Nav.Item>
         <Nav.Item className="ms-auto">
           <Nav.Link eventKey="Profile">
             Welcome, {user?.firstName ? user?.firstName : null}
-            <i class="bi bi-person-fill ps-1"></i>
+            <i className="bi bi-person-fill ps-1"></i>
           </Nav.Link>
         </Nav.Item>
       </Nav>

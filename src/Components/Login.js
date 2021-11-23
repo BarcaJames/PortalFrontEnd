@@ -63,7 +63,7 @@ const Login = () => {
           <Card.Title>User Management Portal</Card.Title>
           <InputGroup className="mb-3">
             <InputGroup.Text id="username">
-              <i class="bi bi-person-fill"></i>
+              <i className="bi bi-person-fill"></i>
             </InputGroup.Text>
             <FormControl
               value={username}
@@ -75,7 +75,7 @@ const Login = () => {
           </InputGroup>
           <InputGroup className="mb-3">
             <InputGroup.Text id="password">
-              <i class="bi bi-lock-fill"></i>
+              <i className="bi bi-lock-fill"></i>
             </InputGroup.Text>
             <FormControl
               value={password}

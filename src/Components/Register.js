@@ -13,28 +13,28 @@ const Register = () => {
 
           <InputGroup className="mb-3">
             <InputGroup.Text id="First-name">
-              <i class="bi bi-person-fill"></i>
+              <i className="bi bi-person-fill"></i>
             </InputGroup.Text>
             <FormControl placeholder="First name" aria-label="First-name" />
           </InputGroup>
 
           <InputGroup className="mb-3">
             <InputGroup.Text id="Last-name">
-              <i class="bi bi-person-fill"></i>
+              <i className="bi bi-person-fill"></i>
             </InputGroup.Text>
             <FormControl placeholder="Last name" aria-label="Last-name" />
           </InputGroup>
 
           <InputGroup className="mb-3">
             <InputGroup.Text id="username">
-              <i class="bi bi-person-fill"></i>
+              <i className="bi bi-person-fill"></i>
             </InputGroup.Text>
             <FormControl placeholder="user name" aria-label="username" />
           </InputGroup>
 
           <InputGroup className="mb-3">
             <InputGroup.Text id="email">
-              <i class="bi bi-envelope-fill"></i>
+              <i className="bi bi-envelope-fill"></i>
             </InputGroup.Text>
             <FormControl placeholder="email" aria-label="email" />
           </InputGroup>

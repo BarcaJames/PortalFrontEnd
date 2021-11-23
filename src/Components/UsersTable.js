@@ -83,7 +83,7 @@ const UsersTable = ({ filterText, setShowModal }) => {
                     </td>
                     <td>
                       <i
-                        class="bi bi-pencil-square px-2"
+                        className="bi bi-pencil-square px-2"
                         onClick={(event) => {
                           event.stopPropagation();
                           setEditUser(user);
@@ -91,7 +91,7 @@ const UsersTable = ({ filterText, setShowModal }) => {
                         }}
                       />
                       <i
-                        class="bi bi-trash"
+                        className="bi bi-trash"
                         onClick={(event) => handleDelete(event, user?.username)}
                       />
                     </td>

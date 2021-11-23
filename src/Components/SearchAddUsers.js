@@ -27,7 +27,7 @@ const SearchAddUsers = ({ filterText, setFilterText }) => {
             id="add-user"
             onClick={handleShow}
           >
-            <i class="bi bi-plus-circle pe-1"></i>
+            <i className="bi bi-plus-circle pe-1"></i>
             User
           </Button>
         </InputGroup>
