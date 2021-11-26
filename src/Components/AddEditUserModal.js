@@ -87,6 +87,7 @@ const AddEditUserModal = ({
             values,
             touched,
             isValid,
+            dirty,
             errors,
             setFieldValue,
           }) => (
@@ -208,7 +209,7 @@ const AddEditUserModal = ({
                   }}
                 />
               </Form.Group>
-              <Button type="submit">Submit form</Button>
+              {dirty ? <Button type="submit">Submit form</Button> : null}
             </Form>
           )}
         </Formik>
