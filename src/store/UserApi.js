@@ -17,8 +17,6 @@ const axiosBaseQuery =
         result.data = { ...result.data, token };
       }
 
-      console.log("IN AXIOS--->", result.data);
-
       return { data: result.data };
     } catch (axiosError) {
       let err = axiosError;
@@ -84,7 +82,7 @@ export const userApi = createApi({
       query: (formData) => ({ url: `/update`, method: "post", data: formData }),
       invalidatesTags: ["User"],
       transformResponse: (response) => {
-        console.log("RESPONSE ADD USER--->", response);
+        console.log("RESPONSE UPDATE USER--->", response);
         return response;
       },
     }),

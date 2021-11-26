@@ -9,6 +9,7 @@ import {
 import { addSelectedUser } from "../features/user/selectedUserSlice";
 import { useState } from "react";
 import AddEditUserModal from "./AddEditUserModal";
+import useGetAuthInfo from "../hooks/use-getAuthInfo";
 
 const UsersTable = ({ filterText, setShowModal }) => {
   const dispatch = useDispatch();
@@ -17,6 +18,7 @@ const UsersTable = ({ filterText, setShowModal }) => {
   const [deleteUserTrigger] = useDeleteUserMutation();
   const [editUser, setEditUser] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const { hasAuthority } = useGetAuthInfo();
 
   const handleCloseEditModal = () => setShowEditModal(false);
 
@@ -66,6 +68,7 @@ const UsersTable = ({ filterText, setShowModal }) => {
                       <Image
                         style={{ objectFit: "contain" }}
                         width="60px"
+                        height="60px"
                         src={user.profileImageUrl}
                         roundedCircle
                         alt="profile-picture"
@@ -81,7 +84,7 @@ const UsersTable = ({ filterText, setShowModal }) => {
                         {user.active ? `Active` : "Inactive"}
                       </Badge>
                     </td>
-                    <td>
+                    <td className="text-center">
                       <i
                         className="bi bi-pencil-square px-2"
                         onClick={(event) => {
@@ -90,10 +93,14 @@ const UsersTable = ({ filterText, setShowModal }) => {
                           setShowEditModal(true);
                         }}
                       />
-                      <i
-                        className="bi bi-trash"
-                        onClick={(event) => handleDelete(event, user?.username)}
-                      />
+                      {hasAuthority("user:delete") ? (
+                        <i
+                          className="bi bi-trash"
+                          onClick={(event) =>
+                            handleDelete(event, user?.username)
+                          }
+                        />
+                      ) : null}
                     </td>
                   </tr>
                 ))

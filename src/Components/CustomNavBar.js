@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
 import { Nav } from "react-bootstrap";
+import useGetAuthInfo from "../hooks/use-getAuthInfo";
 const CustomNavBar = ({ selectedNav, setSelectedNav }) => {
   const user = useSelector((state) => state?.currentUser?.currentUser);
+  const { hasAuthority } = useGetAuthInfo();
   return (
     <>
       <Nav
@@ -16,12 +18,15 @@ const CustomNavBar = ({ selectedNav, setSelectedNav }) => {
             Users
           </Nav.Link>
         </Nav.Item>
-        <Nav.Item>
-          <Nav.Link eventKey="Settings">
-            <i className="bi bi-gear-fill pe-1"></i>
-            Settings
-          </Nav.Link>
-        </Nav.Item>
+        {hasAuthority("user:create") ? (
+          <Nav.Item>
+            <Nav.Link eventKey="Settings">
+              <i className="bi bi-gear-fill pe-1"></i>
+              Settings
+            </Nav.Link>
+          </Nav.Item>
+        ) : null}
+
         <Nav.Item className="ms-auto">
           <Nav.Link eventKey="Profile">
             Welcome, {user?.firstName ? user?.firstName : null}

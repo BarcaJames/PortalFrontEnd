@@ -2,8 +2,10 @@ import { useState } from "react";
 import { useAddUserMutation } from "../store/UserApi";
 import { InputGroup, FormControl, Button } from "react-bootstrap";
 import AddEditUserModal from "./AddEditUserModal";
+import useGetAuthInfo from "../hooks/use-getAuthInfo";
 
 const SearchAddUsers = ({ filterText, setFilterText }) => {
+  const { hasAuthority } = useGetAuthInfo();
   const [trigger] = useAddUserMutation();
   const [show, setShow] = useState(false);
 
@@ -21,15 +23,17 @@ const SearchAddUsers = ({ filterText, setFilterText }) => {
             value={filterText}
             onChange={(event) => setFilterText(event.target.value)}
           />
-          <Button
-            className="w-25"
-            variant="secondary"
-            id="add-user"
-            onClick={handleShow}
-          >
-            <i className="bi bi-plus-circle pe-1"></i>
-            User
-          </Button>
+          {hasAuthority("user:create") ? (
+            <Button
+              className="w-25"
+              variant="secondary"
+              id="add-user"
+              onClick={handleShow}
+            >
+              <i className="bi bi-plus-circle pe-1"></i>
+              User
+            </Button>
+          ) : null}
         </InputGroup>
       </div>
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { decode } from "jsonwebtoken";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const useGetAuthInfo = () => {
   const BASE_URL = "http://localhost:8080/user";
@@ -8,6 +9,7 @@ const useGetAuthInfo = () => {
   const token = localStorage.getItem("token");
   var current_time = new Date().getTime() / 1000;
   var decodedToken;
+  const user = useSelector((state) => state?.currentUser?.currentUser);
 
   const isTokenValid = () => {
     if (token) {
@@ -31,6 +33,23 @@ const useGetAuthInfo = () => {
     navigate("/");
   };
 
+  // const getAuthoritiesFromToken = async () => {
+  //   let tokenValid = await isTokenValid();
+  //   if (tokenValid) {
+  //     return new Promise((resolve) => resolve(decodedToken.Authorities));
+  //   }
+  //   navigate("/");
+  // };
+
+  // const canUserDelete = async () => {
+  //   const authorities = await getAuthoritiesFromToken();
+  //   return authorities.includes("user:delete");
+  // };
+
+  const hasAuthority = (authority) => {
+    return user?.authorities.includes(authority);
+  };
+
   const addUserToState = async () => {
     let username = await getUsernameFromToken();
     if (username) {
@@ -46,7 +65,12 @@ const useGetAuthInfo = () => {
     navigate("/");
   };
 
-  return { isTokenValid, getUsernameFromToken, addUserToState };
+  return {
+    isTokenValid,
+    getUsernameFromToken,
+    addUserToState,
+    hasAuthority,
+  };
 };
 
 export default useGetAuthInfo;
