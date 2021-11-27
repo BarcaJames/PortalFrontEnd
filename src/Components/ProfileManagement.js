@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import useGetAuthInfo from "../hooks/use-getAuthInfo";
 import { Form, Button, Col, Row, Image, Spinner } from "react-bootstrap";
 import {
   useUpdateProfileImageMutation,
@@ -13,6 +14,7 @@ import { toast } from "react-toastify";
 const ProfileManagement = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { hasAuthority } = useGetAuthInfo();
   const [updatePictureTrigger, { isLoading }] = useUpdateProfileImageMutation();
   const [updateUserTrigger] = useUpdateUserMutation();
   const user = useSelector((state) => state?.currentUser?.currentUser);
@@ -180,21 +182,23 @@ const ProfileManagement = () => {
               />
             </Form.Group>
 
-            <Form.Group className="mb-3">
-              <Form.Label>Role</Form.Label>
-              <Form.Select
-                name="role"
-                disabled
-                value={userData.role}
-                onChange={handleChange}
-              >
-                <option value="ROLE_USER">User</option>
-                <option value="ROLE_HR">HR</option>
-                <option value="ROLE_MANAGER">Manager</option>
-                <option value="ROLE_ADMIN">Admin</option>
-                <option value="ROLE_SUPER_ADMIN">Super Admin</option>
-              </Form.Select>
-            </Form.Group>
+            {hasAuthority("user:delete") ? (
+              <Form.Group className="mb-3">
+                <Form.Label>Role</Form.Label>
+                <Form.Select
+                  name="role"
+                  disabled
+                  value={userData.role}
+                  onChange={handleChange}
+                >
+                  <option value="ROLE_USER">User</option>
+                  <option value="ROLE_HR">HR</option>
+                  <option value="ROLE_MANAGER">Manager</option>
+                  <option value="ROLE_ADMIN">Admin</option>
+                  <option value="ROLE_SUPER_ADMIN">Super Admin</option>
+                </Form.Select>
+              </Form.Group>
+            ) : null}
 
             <Form.Group className="mb-3">
               <Form.Label className="fw-bold"> Account Settings</Form.Label>

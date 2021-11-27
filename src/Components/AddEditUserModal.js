@@ -3,6 +3,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { Button, Form, InputGroup, Modal } from "react-bootstrap";
 import { toast } from "react-toastify";
+import useGetAuthInfo from "../hooks/use-getAuthInfo";
 
 const schema = yup.object().shape({
   firstName: yup
@@ -34,6 +35,8 @@ const AddEditUserModal = ({
   editUser,
   trigger,
 }) => {
+  const { hasAuthority } = useGetAuthInfo();
+
   const submitForm = (values) => {
     let formData = new FormData();
 
@@ -59,7 +62,10 @@ const AddEditUserModal = ({
     <Modal show={show} onHide={handleClose}>
       <Modal.Header closeButton>
         <Modal.Title>
-          {title} {editUser?.firstName}
+          {title} {editUser?.firstName}{" "}
+          {!hasAuthority("user:update") ? (
+            <small className="text-muted"> (read only) </small>
+          ) : null}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
@@ -103,6 +109,7 @@ const AddEditUserModal = ({
                   onBlur={handleBlur}
                   isValid={touched.firstName && !errors.firstName}
                   isInvalid={touched.firstName && errors.firstName}
+                  disabled={!hasAuthority("user:update")}
                 />
 
                 <Form.Control.Feedback type="invalid">
@@ -121,6 +128,7 @@ const AddEditUserModal = ({
                   onBlur={handleBlur}
                   isValid={touched.lastName && !errors.lastName}
                   isInvalid={touched.lastName && errors.lastName}
+                  disabled={!hasAuthority("user:update")}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.lastName}
@@ -138,6 +146,7 @@ const AddEditUserModal = ({
                   onBlur={handleBlur}
                   isValid={touched.username && !errors.username}
                   isInvalid={touched.username && errors.username}
+                  disabled={!hasAuthority("user:update")}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.username}
@@ -156,6 +165,7 @@ const AddEditUserModal = ({
                   onBlur={handleBlur}
                   isValid={touched.email && !errors.email}
                   isInvalid={touched.email && errors.email}
+                  disabled={!hasAuthority("user:update")}
                 />
                 <Form.Control.Feedback type="invalid">
                   {errors.email}
@@ -168,6 +178,7 @@ const AddEditUserModal = ({
                   name="role"
                   value={values.role}
                   onChange={handleChange}
+                  disabled={!hasAuthority("user:update")}
                 >
                   <option value="ROLE_USER">User</option>
                   <option value="ROLE_HR">HR</option>
@@ -184,8 +195,8 @@ const AddEditUserModal = ({
                   label="Active"
                   name="isActive"
                   onChange={handleChange}
-                  // checked={userData.isActive}
                   checked={values.isActive}
+                  disabled={!hasAuthority("user:update")}
                 />
                 <Form.Check
                   value=""
@@ -193,8 +204,8 @@ const AddEditUserModal = ({
                   label="Unlocked"
                   name="isNonLocked"
                   onChange={handleChange}
-                  // checked={userData.isNonLocked}
                   checked={values.isNonLocked}
+                  disabled={!hasAuthority("user:update")}
                 />
               </Form.Group>
 
@@ -203,13 +214,15 @@ const AddEditUserModal = ({
                   name="profileImage"
                   accept="image/*"
                   type="file"
-                  // onChange={handleFileChange}
                   onChange={(event) => {
                     setFieldValue("profileImage", event.target.files[0]);
                   }}
+                  disabled={!hasAuthority("user:update")}
                 />
               </Form.Group>
-              {dirty ? <Button type="submit">Submit form</Button> : null}
+              {dirty && hasAuthority("user:update") ? (
+                <Button type="submit">Submit form</Button>
+              ) : null}
             </Form>
           )}
         </Formik>
