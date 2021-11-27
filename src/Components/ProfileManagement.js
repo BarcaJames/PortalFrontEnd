@@ -24,8 +24,8 @@ const ProfileManagement = () => {
     isNonLocked: user.notLocked,
     isActive: user.active,
     role: user.role,
-    profileImageUrl: user.profileImageUrl,
     currentUsername: user.username,
+    profileImage: user.profileImage,
   });
 
   const handleChange = (event) => {
@@ -92,7 +92,16 @@ const ProfileManagement = () => {
                 {isLoading ? (
                   <Spinner animation="border" role="status" />
                 ) : (
-                  <Image src={userData.profileImageUrl} thumbnail />
+                  <Image
+                    style={{ objectFit: "contain" }}
+                    src={
+                      userData.profileImage
+                        ? "data:image/png;base64," + userData.profileImage
+                        : "https://robohash.org/" + userData.username
+                    }
+                    thumbnail
+                    alt="profile-picture"
+                  />
                 )}
               </Col>
               <Col>
