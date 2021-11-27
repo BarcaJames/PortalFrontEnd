@@ -10,6 +10,7 @@ import { addSelectedUser } from "../features/user/selectedUserSlice";
 import { useState } from "react";
 import AddEditUserModal from "./AddEditUserModal";
 import useGetAuthInfo from "../hooks/use-getAuthInfo";
+import DeleteModal from "./DeleteModal";
 
 const UsersTable = ({ filterText, setShowModal }) => {
   const dispatch = useDispatch();
@@ -18,12 +19,13 @@ const UsersTable = ({ filterText, setShowModal }) => {
   const [deleteUserTrigger] = useDeleteUserMutation();
   const [editUser, setEditUser] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const { hasAuthority } = useGetAuthInfo();
 
   const handleCloseEditModal = () => setShowEditModal(false);
+  const handleCloseDeleteModal = () => setShowDeleteModal(false);
 
-  const handleDelete = (event, username) => {
-    event.stopPropagation();
+  const handleDelete = (username) => {
     deleteUserTrigger(username)
       .unwrap()
       .then((payload) => console.log("Fulfilled", payload))
@@ -100,9 +102,11 @@ const UsersTable = ({ filterText, setShowModal }) => {
                       {hasAuthority("user:delete") ? (
                         <i
                           className="bi bi-trash"
-                          onClick={(event) =>
-                            handleDelete(event, user?.username)
-                          }
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setEditUser(user);
+                            setShowDeleteModal(true);
+                          }}
                         />
                       ) : null}
                     </td>
@@ -122,6 +126,13 @@ const UsersTable = ({ filterText, setShowModal }) => {
           trigger={trigger}
         />
       ) : null}
+
+      <DeleteModal
+        handleClose={handleCloseDeleteModal}
+        show={showDeleteModal}
+        handleDelete={handleDelete}
+        user={editUser}
+      />
     </>
   );
 };
