@@ -29,7 +29,16 @@ const SelectedUserModal = ({ showModal, setShowModal }) => {
                 <ListGroup.Item>
                   <Row>
                     <Col>
-                      <Image src={user.profileImageUrl} thumbnail />
+                      <Image
+                        style={{ objectFit: "contain" }}
+                        src={
+                          user.profileImage
+                            ? "data:image/png;base64," + user.profileImage
+                            : "https://robohash.org/" + user.username
+                        }
+                        thumbnail
+                        alt="profile-picture"
+                      />
                     </Col>
                     <Col>
                       {user.firstName} {user.lastName}

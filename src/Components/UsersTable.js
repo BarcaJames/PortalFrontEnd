@@ -69,7 +69,11 @@ const UsersTable = ({ filterText, setShowModal }) => {
                         style={{ objectFit: "contain" }}
                         width="60px"
                         height="60px"
-                        src={user.profileImageUrl}
+                        src={
+                          user.profileImage
+                            ? "data:image/png;base64," + user.profileImage
+                            : "https://robohash.org/" + user.username
+                        }
                         roundedCircle
                         alt="profile-picture"
                       />
