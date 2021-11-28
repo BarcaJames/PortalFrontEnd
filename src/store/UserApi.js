@@ -50,6 +50,7 @@ export const userApi = createApi({
         method: "POST",
         data: userData,
       }),
+      keepUnusedDataFor: 1, //Remove this one second after login screen unmount
       transformResponse: (response) => {
         // console.log("RESPONSE loginUser--->", response);
         return response;
