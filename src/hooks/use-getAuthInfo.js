@@ -16,12 +16,15 @@ const useGetAuthInfo = () => {
       decodedToken = decode(token);
       if (decodedToken) {
         if (current_time < decodedToken.exp) {
-          console.log("Not expired");
+          // console.log("Not expired");
           return new Promise((resolve) => resolve(true));
         }
       }
       // return new Promise((resolve) => resolve(false));
     }
+
+    // console.log("Expired!");
+    localStorage.removeItem("token");
     return new Promise((resolve) => resolve(false));
   };
 
