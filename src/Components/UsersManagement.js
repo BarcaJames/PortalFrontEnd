@@ -4,7 +4,10 @@ import SearchAddUsers from "./SearchAddUsers";
 import { useLazyGetCurrentUserQuery } from "../store/UserApi";
 import useGetAuthInfo from "../hooks/use-getAuthInfo";
 import { useNavigate } from "react-router-dom";
-import { addCurrentUser } from "../features/user/currentUserSlice";
+import {
+  addCurrentUser,
+  resetCurrentUser,
+} from "../features/user/currentUserSlice";
 import SelectedUserModal from "./SelectedUserModal";
 import UsersTable from "./UsersTable";
 
@@ -36,6 +39,7 @@ const UsersManagement = () => {
     // Get called when the user in the token was removed from the database
     if (data === "" && isSuccess) {
       localStorage.clear();
+      dispatch(resetCurrentUser());
       navigate("/");
     }
   }, [data, dispatch, navigate, isSuccess]);
