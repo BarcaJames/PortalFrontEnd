@@ -6,7 +6,15 @@ const axiosBaseQuery =
   ({ baseUrl }) =>
   async ({ url, method, data }) => {
     try {
-      const result = await axios({ url: baseUrl + url, method, data });
+      let requestToken = localStorage.getItem("token");
+      const result = await axios({
+        url: baseUrl + url,
+        method,
+        data,
+        headers: requestToken
+          ? { Authorization: "Bearer " + requestToken }
+          : null,
+      });
       var token = "";
       // Get token from header when user login successfully
       if (method.toUpperCase() === "POST" && url === "/login") {
