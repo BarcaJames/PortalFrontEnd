@@ -51,6 +51,9 @@ const ProfileManagement = () => {
     updatePictureTrigger(formData)
       .unwrap()
       .then((res) => {
+        setUserData((state) => {
+          return { ...state, profileImage: res.profileImage };
+        });
         toast.success("Picture uploaded successfully!");
       })
       .catch((err) => {
@@ -113,7 +116,10 @@ const ProfileManagement = () => {
                 <span>{userData.username}</span>
                 <Form.Group className="mb-2">
                   <Form.Text muted>
-                    Last login: {new Date(user.lastLoginDate).toDateString()}
+                    Last login:{" "}
+                    {user.lastLoginDate
+                      ? new Date(user.lastLoginDate).toDateString()
+                      : null}
                   </Form.Text>
                 </Form.Group>
 
@@ -187,7 +193,6 @@ const ProfileManagement = () => {
                 <Form.Label>Role</Form.Label>
                 <Form.Select
                   name="role"
-                  disabled
                   value={userData.role}
                   onChange={handleChange}
                 >
