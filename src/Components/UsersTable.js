@@ -28,7 +28,6 @@ const UsersTable = ({ filterText, setShowModal }) => {
   const handleDelete = (username) => {
     deleteUserTrigger(username)
       .unwrap()
-      .then((payload) => console.log("Fulfilled", payload))
       .catch((err) => toast.error(err.data.message.toLowerCase()));
   };
 

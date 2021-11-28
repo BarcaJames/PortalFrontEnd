@@ -18,8 +18,8 @@ import { addCurrentUser } from "../features/user/currentUserSlice";
 const Login = () => {
   const navigate = useNavigate();
   const { getUsernameFromToken } = useGetAuthInfo();
-  const [username, setUsername] = useState("Jamie");
-  const [password, setPassword] = useState("password");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
   const currentUser = useSelector((state) => state?.currentUser?.currentUser);
   const dispatch = useDispatch();
 

@@ -43,7 +43,7 @@ export const userApi = createApi({
         data: userData,
       }),
       transformResponse: (response) => {
-        console.log("RESPONSE loginUser--->", response);
+        // console.log("RESPONSE loginUser--->", response);
         return response;
       },
       async onQueryStarted(
@@ -53,10 +53,10 @@ export const userApi = createApi({
         let responseData = await queryFulfilled.catch((err) => err);
         if (responseData?.error) {
           let { data } = responseData.error;
-          console.log("Error Data", data);
+          // console.log("Error Data", data);
           toast.error(data.message.toLowerCase());
         }
-        console.log("RESPONSE DATA in loginUser---> ", responseData);
+        // console.log("RESPONSE DATA in loginUser---> ", responseData);
 
         if (responseData?.data) {
           let {
@@ -73,7 +73,7 @@ export const userApi = createApi({
       query: (formData) => ({ url: `/add`, method: "post", data: formData }),
       invalidatesTags: ["User"],
       transformResponse: (response) => {
-        console.log("RESPONSE ADD USER--->", response);
+        // console.log("RESPONSE ADD USER--->", response);
         return response;
       },
     }),
@@ -82,7 +82,7 @@ export const userApi = createApi({
       query: (formData) => ({ url: `/update`, method: "post", data: formData }),
       invalidatesTags: ["User"],
       transformResponse: (response) => {
-        console.log("RESPONSE UPDATE USER--->", response);
+        // console.log("RESPONSE UPDATE USER--->", response);
         return response;
       },
     }),
@@ -94,7 +94,7 @@ export const userApi = createApi({
         data: formData,
       }),
       transformResponse: (response) => {
-        console.log("RESPONSE UPDATE USER PROFILE IMAGE--->", response);
+        // console.log("RESPONSE UPDATE USER PROFILE IMAGE--->", response);
         return response;
       },
     }),
@@ -103,14 +103,14 @@ export const userApi = createApi({
       query: (username) => ({ url: `/delete/${username}`, method: "delete" }),
       invalidatesTags: ["User"],
       transformResponse: (response) => {
-        console.log("USER DELETED TRANSFORM--->", response);
+        // console.log("USER DELETED TRANSFORM--->", response);
         return response;
       },
       async onQueryStarted(arg, { queryFulfilled }) {
         let responseData = await queryFulfilled.catch((err) => err.data);
-        console.log("queryFulfilled USER DELETED ---> ", responseData);
+        // console.log("queryFulfilled USER DELETED ---> ", responseData);
         if (responseData?.data === "") {
-          console.log("RESPONSE DATA IN queryFulfilled is empty");
+          // console.log("RESPONSE DATA IN queryFulfilled is empty");
           toast.success("User deleted successfully!");
         }
       },
@@ -119,7 +119,7 @@ export const userApi = createApi({
     resetPassword: builder.query({
       query: (email) => ({ url: `/reset-password/${email}`, method: "post" }),
       transformResponse: (response) => {
-        console.log("RESPONSE Reset Email--->", response);
+        // console.log("RESPONSE Reset Email--->", response);
         return response;
       },
       async onQueryStarted(
@@ -128,11 +128,11 @@ export const userApi = createApi({
       ) {
         let responseData = await queryFulfilled.catch((err) => err);
 
-        console.log("RESPONSE DATA in Reset Password---> ", responseData);
+        // console.log("RESPONSE DATA in Reset Password---> ", responseData);
 
         if (responseData?.error) {
           let { data } = responseData.error;
-          console.log("Error Data", data);
+          // console.log("Error Data", data);
           toast.error(data.message.toLowerCase());
         }
         // console.log("RESPONSE DATA in loginUser---> ", responseData);
@@ -151,7 +151,7 @@ export const userApi = createApi({
       query: (username) => ({ url: `/find/${username}`, method: "get" }),
       providesTags: ["User"],
       transformResponse: (response) => {
-        console.log("RESPONSE getCurrentUser--->", response);
+        // console.log("RESPONSE getCurrentUser--->", response);
         return response;
       },
       // async onQueryStarted(
