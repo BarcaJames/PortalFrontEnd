@@ -92,8 +92,8 @@ const ProfileManagement = () => {
       <Row>
         <Col md={9}>
           <Form className="border border-blue p-3">
-            <Row>
-              <Col className="mb-2 d-flex justify-content-center align-items-center">
+            <Row className="justify-content-center text-center">
+              <Col xs={12} sm={4} md={4} className="mb-2">
                 {isLoading ? (
                   <Spinner animation="border" role="status" />
                 ) : (
@@ -109,21 +109,8 @@ const ProfileManagement = () => {
                   />
                 )}
               </Col>
-              <Col>
-                <div className="fw-bold">
-                  {`${userData.firstName} ${userData.lastName}`}
-                </div>
-                <span>{userData.username}</span>
-                <Form.Group className="mb-2">
-                  <Form.Text muted>
-                    Last login:{" "}
-                    {user.lastLoginDate
-                      ? new Date(user.lastLoginDate).toDateString()
-                      : null}
-                  </Form.Text>
-                </Form.Group>
-
-                <Form.Group className="mb-3">
+              <Col xs={12} sm={4} md={4}>
+                <Form.Group>
                   <Form.Label
                     className="btn btn-primary"
                     visuallyHidden={isLoading}
@@ -138,15 +125,29 @@ const ProfileManagement = () => {
                     <i className="bi bi-camera-fill ms-1 fs-5"></i>
                   </Form.Label>
                 </Form.Group>
+
+                <div className="fw-bold">
+                  {`${userData.firstName} ${userData.lastName}`}
+                </div>
+                <span>{userData.username}</span>
+                <Form.Group>
+                  <Form.Text muted>
+                    Last login:{" "}
+                    {user.lastLoginDate
+                      ? new Date(user.lastLoginDate).toDateString()
+                      : null}
+                  </Form.Text>
+                </Form.Group>
               </Col>
-              <Col className="d-flex justify-content-end">
+              <Col xs={12} sm={4} md={4}>
                 <Form.Text muted>
                   Joined: {new Date(user.joinDate).toDateString()}
                 </Form.Text>
               </Col>
             </Row>
+            <hr />
             <Row className="mb-3">
-              <Form.Group as={Col}>
+              <Form.Group as={Col} sm={12} md={6}>
                 <Form.Label>First Name</Form.Label>
                 <Form.Control
                   onChange={handleChange}
@@ -156,7 +157,7 @@ const ProfileManagement = () => {
                 />
               </Form.Group>
 
-              <Form.Group as={Col}>
+              <Form.Group as={Col} sm={12} md={6}>
                 <Form.Label>Last Name</Form.Label>
                 <Form.Control
                   onChange={handleChange}
