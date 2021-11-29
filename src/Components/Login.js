@@ -5,6 +5,8 @@ import {
   FormControl,
   InputGroup,
   Spinner,
+  Row,
+  Col,
 } from "react-bootstrap";
 import {
   useLazyLoginUserQuery,
@@ -54,71 +56,73 @@ const Login = () => {
   }, [isSuccess, data, dispatch, navigate, currentUser]);
 
   return (
-    <div
+    <Row
       style={{ height: "90vh" }}
-      className="d-flex justify-content-center align-items-center"
+      className="d-flex align-items-center justify-content-center"
     >
-      <Card className="text-center w-50" bg="info">
-        <Card.Body>
-          <Card.Title>User Management Portal</Card.Title>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="username">
-              <i className="bi bi-person-fill"></i>
-            </InputGroup.Text>
-            <FormControl
-              value={username}
-              id="username"
-              placeholder="username"
-              aria-label="username"
-              onChange={(event) => setUsername(event.target.value)}
-            />
-          </InputGroup>
-          <InputGroup className="mb-3">
-            <InputGroup.Text id="password">
-              <i className="bi bi-lock-fill"></i>
-            </InputGroup.Text>
-            <FormControl
-              value={password}
-              type="password"
-              placeholder="password"
-              aria-label="password"
-              onChange={(event) => setPassword(event.target.value)}
-            />
-          </InputGroup>
-          <Button
-            className="w-50"
-            variant="primary"
-            disabled={isFetching}
-            // onClick={handleClick}
-            onClick={() =>
-              // toast("Let us see!")
-              triggerLogin({
-                username,
-                password,
-              })
-            }
-          >
-            {isFetching ? (
-              <>
-                <Spinner
-                  as="span"
-                  animation="border"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-                <span className="visually-hidden">Loading...</span>
-              </>
-            ) : (
-              <>Submit</>
-            )}
-          </Button>
-        </Card.Body>
-        <span className="mb-3">
-          Are you new here? <Link to="/register">Sign up</Link>
-        </span>
-      </Card>
-    </div>
+      <Col md={6}>
+        <Card className="text-center" bg="info">
+          <Card.Body>
+            <Card.Title>User Management Portal</Card.Title>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="username">
+                <i className="bi bi-person-fill"></i>
+              </InputGroup.Text>
+              <FormControl
+                value={username}
+                id="username"
+                placeholder="username"
+                aria-label="username"
+                onChange={(event) => setUsername(event.target.value)}
+              />
+            </InputGroup>
+            <InputGroup className="mb-3">
+              <InputGroup.Text id="password">
+                <i className="bi bi-lock-fill"></i>
+              </InputGroup.Text>
+              <FormControl
+                value={password}
+                type="password"
+                placeholder="password"
+                aria-label="password"
+                onChange={(event) => setPassword(event.target.value)}
+              />
+            </InputGroup>
+            <Button
+              className="w-50"
+              variant="primary"
+              disabled={isFetching}
+              // onClick={handleClick}
+              onClick={() =>
+                // toast("Let us see!")
+                triggerLogin({
+                  username,
+                  password,
+                })
+              }
+            >
+              {isFetching ? (
+                <>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  <span className="visually-hidden">Loading...</span>
+                </>
+              ) : (
+                <>Submit</>
+              )}
+            </Button>
+          </Card.Body>
+          <span className="mb-3">
+            Are you new here? <Link to="/register">Sign up</Link>
+          </span>
+        </Card>
+      </Col>
+    </Row>
   );
 };
 
