@@ -36,7 +36,9 @@ const axiosBaseQuery =
 
 export const userApi = createApi({
   reducerPath: "userApi",
-  baseQuery: axiosBaseQuery({ baseUrl: "http://localhost:8080/user" }),
+  baseQuery: axiosBaseQuery({
+    baseUrl: "https://support-portal-barca-james.herokuapp.com/user",
+  }),
   tagTypes: ["User"],
   endpoints: (builder) => ({
     getAllUsers: builder.query({
