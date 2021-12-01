@@ -6,7 +6,7 @@ var serverUrl = "";
 if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
   serverUrl = "http://localhost:8080";
 } else {
-  serverUrl = "http://support-portal-barca-james.herokuapp.com";
+  serverUrl = "https://support-portal-barca-james.herokuapp.com";
 }
 
 const axiosBaseQuery =
