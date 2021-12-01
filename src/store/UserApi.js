@@ -2,6 +2,13 @@ import { createApi } from "@reduxjs/toolkit/query/react";
 import axios from "axios";
 import { toast } from "react-toastify";
 
+var serverUrl = "";
+if (!process.env.NODE_ENV || process.env.NODE_ENV === "development") {
+  serverUrl = "http://localhost:8080";
+} else {
+  serverUrl = "http://support-portal-barca-james.herokuapp.com";
+}
+
 const axiosBaseQuery =
   ({ baseUrl }) =>
   async ({ url, method, data }) => {
@@ -37,7 +44,7 @@ const axiosBaseQuery =
 export const userApi = createApi({
   reducerPath: "userApi",
   baseQuery: axiosBaseQuery({
-    baseUrl: "https://support-portal-barca-james.herokuapp.com/user",
+    baseUrl: serverUrl + "/user",
   }),
   tagTypes: ["User"],
   endpoints: (builder) => ({
