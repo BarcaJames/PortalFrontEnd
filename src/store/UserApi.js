@@ -87,6 +87,38 @@ export const userApi = createApi({
       },
     }),
 
+    registerUser: builder.query({
+      query: (userData) => ({
+        url: "/register",
+        method: "POST",
+        data: userData,
+      }),
+      keepUnusedDataFor: 1, //Remove this one second after register screen unmount
+      transformResponse: (response) => {
+        // console.log("RESPONSE loginUser--->", response);
+        return response;
+      },
+      async onQueryStarted(
+        arg,
+        { dispatch, getState, queryFulfilled, requestId, getCacheEntry }
+      ) {
+        let responseData = await queryFulfilled.catch((err) => err);
+        if (responseData?.error) {
+          let { data } = responseData.error;
+          // console.log("Error Data", data);
+          toast.error(data.message.toLowerCase());
+        }
+        // console.log("RESPONSE DATA in loginUser---> ", responseData);
+
+        if (responseData?.data) {
+          let {
+            data: { email },
+          } = responseData;
+          toast.success(`Your password was sent to ${email}`);
+        }
+      },
+    }),
+
     addUser: builder.mutation({
       query: (formData) => ({ url: `/add`, method: "post", data: formData }),
       invalidatesTags: ["User"],
@@ -194,6 +226,7 @@ export const userApi = createApi({
 export const {
   useGetAllUsersQuery,
   useLazyLoginUserQuery,
+  useLazyRegisterUserQuery,
   useLazyGetCurrentUserQuery,
   useAddUserMutation,
   useUpdateUserMutation,
