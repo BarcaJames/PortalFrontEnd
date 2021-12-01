@@ -12,7 +12,7 @@ const CustomNavBar = ({ selectedNav, setSelectedNav }) => {
       onSelect={(selectedKey) => setSelectedNav(selectedKey)}
       as={Row}
     >
-      <Nav.Item as={Col}>
+      <Nav.Item as={Col} xs={12} sm={3} md={3} lg={2}>
         <Nav.Link eventKey="Users" className="d-flex justify-content-center">
           <i className="bi bi-people-fill pe-1"></i>
           Users
@@ -20,7 +20,7 @@ const CustomNavBar = ({ selectedNav, setSelectedNav }) => {
       </Nav.Item>
 
       {hasAuthority("user:create") ? (
-        <Nav.Item as={Col}>
+        <Nav.Item as={Col} xs={12} sm={3} md={3} lg={2}>
           <Nav.Link
             eventKey="Settings"
             className="d-flex justify-content-center"
@@ -32,7 +32,9 @@ const CustomNavBar = ({ selectedNav, setSelectedNav }) => {
       ) : null}
 
       <Nav.Item
+        className="ms-auto"
         as={Col}
+        xs={12}
         sm={{ span: 5, offset: 1 }}
         md={{ span: 4, offset: 2 }}
         lg={{ span: 3, offset: 5 }}
