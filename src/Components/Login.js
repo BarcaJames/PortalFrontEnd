@@ -113,7 +113,7 @@ const Login = () => {
                   <span className="visually-hidden">Loading...</span>
                 </>
               ) : (
-                <>Submit</>
+                <>Login</>
               )}
             </Button>
           </Card.Body>
