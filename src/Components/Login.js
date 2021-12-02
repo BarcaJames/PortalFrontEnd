@@ -110,7 +110,7 @@ const Login = () => {
                     role="status"
                     aria-hidden="true"
                   />
-                  <span className="visually-hidden">Loading...</span>
+                  <span className="ms-1">Loading...</span>
                 </>
               ) : (
                 <>Login</>
