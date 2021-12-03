@@ -1,7 +1,7 @@
 import React from "react";
 import { Formik } from "formik";
 import * as yup from "yup";
-import { Button, Form, InputGroup, Modal } from "react-bootstrap";
+import { Button, Form, InputGroup, Modal, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import useGetAuthInfo from "../hooks/use-getAuthInfo";
 
@@ -33,6 +33,7 @@ const AddEditUserModal = ({
   handleClose,
   show,
   editUser,
+  isLoading,
   trigger,
 }) => {
   const { hasAuthority } = useGetAuthInfo();
@@ -221,7 +222,23 @@ const AddEditUserModal = ({
                 />
               </Form.Group>
               {dirty && hasAuthority("user:update") ? (
-                <Button type="submit">Submit form</Button>
+                <Button type="submit" disabled={isLoading}>
+                  {isLoading ? (
+                    <div className="d-flex align-items-center justify-content-center">
+                      <Spinner
+                        as="span"
+                        animation="border"
+                        role="status"
+                        size="sm"
+                        aria-hidden="true"
+                        className=" me-1"
+                      />
+                      <span>Loading...</span>
+                    </div>
+                  ) : (
+                    <>Submit form</>
+                  )}
+                </Button>
               ) : null}
             </Form>
           )}
