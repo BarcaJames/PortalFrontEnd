@@ -16,7 +16,8 @@ const ProfileManagement = () => {
   const navigate = useNavigate();
   const { hasAuthority } = useGetAuthInfo();
   const [updatePictureTrigger, { isLoading }] = useUpdateProfileImageMutation();
-  const [updateUserTrigger] = useUpdateUserMutation();
+  const [updateUserTrigger, { isLoading: isUpdatingForm }] =
+    useUpdateUserMutation();
   const user = useSelector((state) => state?.currentUser?.currentUser);
   const [userData, setUserData] = useState({
     firstName: user.firstName,
@@ -27,6 +28,8 @@ const ProfileManagement = () => {
     isActive: user.active,
     role: user.role,
     currentUsername: user.username,
+  });
+  const [pictureState, setPictureState] = useState({
     profileImage: user.profileImage,
   });
 
@@ -51,9 +54,7 @@ const ProfileManagement = () => {
     updatePictureTrigger(formData)
       .unwrap()
       .then((res) => {
-        setUserData((state) => {
-          return { ...state, profileImage: res.profileImage };
-        });
+        setPictureState({ profileImage: res.profileImage });
         toast.success("Picture uploaded successfully!");
       })
       .catch((err) => {
@@ -100,8 +101,8 @@ const ProfileManagement = () => {
                   <Image
                     style={{ objectFit: "contain" }}
                     src={
-                      userData.profileImage
-                        ? "data:image/png;base64," + userData.profileImage
+                      pictureState.profileImage
+                        ? "data:image/png;base64," + pictureState.profileImage
                         : "https://robohash.org/" + userData.username
                     }
                     thumbnail
@@ -226,8 +227,26 @@ const ProfileManagement = () => {
               />
             </Form.Group>
             <Form.Group className="d-flex justify-content-end">
-              <Button variant="primary" type="submit" onClick={handleSubmit}>
-                Save Changes
+              <Button
+                variant="primary"
+                type="submit"
+                onClick={handleSubmit}
+                disabled={isUpdatingForm}
+              >
+                {isUpdatingForm ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    <span className="ms-1">Updating...</span>
+                  </>
+                ) : (
+                  <>Save Changes</>
+                )}
               </Button>
             </Form.Group>
           </Form>
