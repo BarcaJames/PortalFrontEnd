@@ -6,7 +6,7 @@ import useGetAuthInfo from "../hooks/use-getAuthInfo";
 
 const SearchAddUsers = ({ filterText, setFilterText }) => {
   const { hasAuthority } = useGetAuthInfo();
-  const [trigger] = useAddUserMutation();
+  const [trigger, { isLoading }] = useAddUserMutation();
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
@@ -45,6 +45,7 @@ const SearchAddUsers = ({ filterText, setFilterText }) => {
         handleClose={handleClose}
         show={show}
         trigger={trigger}
+        isLoading={isLoading}
       />
     </>
   );
