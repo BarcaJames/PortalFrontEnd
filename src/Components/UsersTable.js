@@ -31,6 +31,19 @@ const UsersTable = ({ filterText, setShowModal }) => {
       .catch((err) => toast.error(err.data.message.toLowerCase()));
   };
 
+  if (isFetching) {
+    return (
+      <div className="d-flex align-items-center justify-content-center">
+        <Spinner
+          as="span"
+          animation="border"
+          role="status"
+          aria-hidden="true"
+        />
+        <span className="visually-hidden">Loading...</span>
+      </div>
+    );
+  } else if (allUsers?.length && isSuccess) {
   return (
     <>
       <Table striped bordered hover responsive>
