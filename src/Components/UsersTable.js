@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { Table, Image, Badge } from "react-bootstrap";
+import { Table, Image, Badge, Spinner } from "react-bootstrap";
 import { toast } from "react-toastify";
 import {
   useGetAllUsersQuery,
@@ -14,8 +14,8 @@ import DeleteModal from "./DeleteModal";
 
 const UsersTable = ({ filterText, setShowModal }) => {
   const dispatch = useDispatch();
-  const { data: allUsers, isSuccess } = useGetAllUsersQuery();
-  const [trigger] = useUpdateUserMutation();
+  const { data: allUsers, isSuccess, isFetching } = useGetAllUsersQuery();
+  const [trigger, { isLoading }] = useUpdateUserMutation();
   const [deleteUserTrigger] = useDeleteUserMutation();
   const [editUser, setEditUser] = useState(null);
   const [showEditModal, setShowEditModal] = useState(false);
@@ -44,109 +44,109 @@ const UsersTable = ({ filterText, setShowModal }) => {
       </div>
     );
   } else if (allUsers?.length && isSuccess) {
-  return (
-    <>
-      <Table striped bordered hover responsive>
-        <thead>
-          <tr>
-            <th>Photo</th>
-            <th>User ID</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Username</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {allUsers?.length && isSuccess
-            ? allUsers
-                .filter((user) =>
-                  user.username.toLowerCase().includes(filterText.toLowerCase())
-                )
-                .map((user) => (
-                  <tr
-                    key={user.userId}
-                    onClick={() => {
-                      setShowModal(true);
-                      dispatch(
-                        addSelectedUser({
-                          allUsers,
-                          selectedUserId: user.userId,
-                        })
-                      );
-                    }}
-                  >
-                    <td>
-                      <Image
-                        style={{ objectFit: "contain" }}
-                        width="60px"
-                        height="60px"
-                        src={
-                          user.profileImage
-                            ? "data:image/png;base64," + user.profileImage
-                            : "https://robohash.org/" + user.username
-                        }
-                        roundedCircle
-                        alt="profile-picture"
-                      />
-                    </td>
-                    <td>{user.userId}</td>
-                    <td>{user.firstName}</td>
-                    <td>{user.lastName}</td>
-                    <td>{user.username}</td>
-                    <td>{user.email}</td>
-                    <td>
-                      <Badge pill bg={user.active ? `primary` : "danger"}>
-                        {user.active ? `Active` : "Inactive"}
-                      </Badge>
-                    </td>
-                    <td className="text-center">
+    return (
+      <>
+        <Table striped bordered hover responsive>
+          <thead>
+            <tr>
+              <th>Photo</th>
+              <th>User ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Username</th>
+              <th>Email</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {allUsers
+              .filter((user) =>
+                user.username.toLowerCase().includes(filterText.toLowerCase())
+              )
+              .map((user) => (
+                <tr
+                  key={user.userId}
+                  onClick={() => {
+                    setShowModal(true);
+                    dispatch(
+                      addSelectedUser({
+                        allUsers,
+                        selectedUserId: user.userId,
+                      })
+                    );
+                  }}
+                >
+                  <td>
+                    <Image
+                      style={{ objectFit: "contain" }}
+                      width="60px"
+                      height="60px"
+                      src={
+                        user.profileImage
+                          ? "data:image/png;base64," + user.profileImage
+                          : "https://robohash.org/" + user.username
+                      }
+                      roundedCircle
+                      alt="profile-picture"
+                    />
+                  </td>
+                  <td>{user.userId}</td>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.username}</td>
+                  <td>{user.email}</td>
+                  <td>
+                    <Badge pill bg={user.active ? `primary` : "danger"}>
+                      {user.active ? `Active` : "Inactive"}
+                    </Badge>
+                  </td>
+                  <td className="text-center">
+                    <i
+                      className="bi bi-pencil-square px-2"
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setEditUser(user);
+                        setShowEditModal(true);
+                      }}
+                    />
+                    {hasAuthority("user:delete") ? (
                       <i
-                        className="bi bi-pencil-square px-2"
+                        className="bi bi-trash"
                         onClick={(event) => {
                           event.stopPropagation();
                           setEditUser(user);
-                          setShowEditModal(true);
+                          setShowDeleteModal(true);
                         }}
                       />
-                      {hasAuthority("user:delete") ? (
-                        <i
-                          className="bi bi-trash"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            setEditUser(user);
-                            setShowDeleteModal(true);
-                          }}
-                        />
-                      ) : null}
-                    </td>
-                  </tr>
-                ))
-            : null}
-        </tbody>
-      </Table>
+                    ) : null}
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </Table>
 
-      {editUser ? (
-        <AddEditUserModal
-          action={"Edit"}
-          title={"Edit "}
-          handleClose={handleCloseEditModal}
-          show={showEditModal}
-          editUser={editUser}
-          trigger={trigger}
+        {editUser ? (
+          <AddEditUserModal
+            action={"Edit"}
+            title={"Edit "}
+            handleClose={handleCloseEditModal}
+            show={showEditModal}
+            editUser={editUser}
+            trigger={trigger}
+            isLoading={isLoading}
+          />
+        ) : null}
+
+        <DeleteModal
+          handleClose={handleCloseDeleteModal}
+          show={showDeleteModal}
+          handleDelete={handleDelete}
+          user={editUser}
         />
-      ) : null}
-
-      <DeleteModal
-        handleClose={handleCloseDeleteModal}
-        show={showDeleteModal}
-        handleDelete={handleDelete}
-        user={editUser}
-      />
-    </>
-  );
+      </>
+    );
+  }
 };
 
 export default UsersTable;
