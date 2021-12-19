@@ -143,6 +143,7 @@ export const userApi = createApi({
         method: "post",
         data: formData,
       }),
+      invalidatesTags: ["User"],
       transformResponse: (response) => {
         // console.log("RESPONSE UPDATE USER PROFILE IMAGE--->", response);
         return response;
