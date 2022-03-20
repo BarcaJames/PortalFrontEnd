@@ -1,3 +1,6 @@
+# Purpose
+After learning spring security I decided to build something with this knowledge, I created a simple system with prepopulated users, some users will have access to some features that other don't. A list of users and privileges are listed below.
+
 # How to use
 
 [URL to access website](https://portal-client-james.web.app)
@@ -9,8 +12,6 @@ This website uses react to connect to a spring boot server that uses spring secu
 **NOTE: [Heroku will sleep after 30 mins of inactivity](https://devcenter.heroku.com/articles/free-dyno-hours). Please be patient, the first request will take about 10 seconds to wake the dyno.**
 
 There is a set of pre populated users in the system so that you can test the features of this system.
-
-<!-- (Add users and privilege here...) -->
 
 | username | password | role        | Privilege                    |
 | -------- | -------- | ----------- | ---------------------------- |
